@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -93,9 +94,9 @@ else:
 # 定義 Flask 應用程式
 app = Flask(__name__)
 
-# Line Bot API 和 Webhook Handler 設定
-line_bot_api = LineBotApi('YSZ+c+nPGW+F4eFU81ck+PxZQcF3uxMOtckjHp6wHzMYoqujiwVEornAuTLt63MNEpx5XS5hrZEs569Eulht++/lujpphAHvAqB8QLOoS+USAxjA3qDLDkVX2lAPx5UPyAhxiFq+dVw74EIfPhEUCwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('6f7ead48c87333f18cfc7f320311b60d')
+# 使用環境變數設定 Line Bot API 和 Webhook Handler
+line_bot_api = LineBotApi(channel_access_token=os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(channel_secret=os.getenv('LINE_CHANNEL_SECRET'))
 
 @app.route("/callback", methods=['POST'])
 def callback():

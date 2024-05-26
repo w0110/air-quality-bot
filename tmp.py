@@ -5,9 +5,9 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, LocationM
 
 app = Flask(__name__)
 
-# Line Bot API 和 Webhook Handler 設定
-line_bot_api = LineBotApi('你的 Channel Access Token')
-handler = WebhookHandler('你的 Channel Secret')
+# 使用環境變數設定 Line Bot API 和 Webhook Handler
+line_bot_api = LineBotApi(channel_access_token=os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(channel_secret=os.getenv('LINE_CHANNEL_SECRET'))
 
 @app.route("/callback", methods=['POST'])
 def callback():
